@@ -1,0 +1,157 @@
+{% extends 'base.html' %} 
+{% block content %}
+
+<div class="row mt-4">
+     <div class="col-lg-8 mx-auto"> 
+        <h3 class="text-center">ADD RECIPE</h3>
+        <form action="{{ url_for('insert_recipe') }}" method="POST" class="col s12">
+            <div class="row">
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Required Tools</div>
+                    </div>
+                    <select id="required_tools" name="required_tools" class="form-control">
+                            
+                        <option value="" disabled selected>Choose Cooking Tool</option>
+                        {% for tool in required_tools %}
+                            <option value="{{tool.required_tool_name}}">{{tool.required_tool_name}}</option>
+                        {% endfor %}
+                    </select>
+                
+                </div>
+            </div>              
+            <div class="row">
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Cuisine Name</div>
+                    </div>
+                    <select id="cuisine" name="cuisine_name" class="form-control">
+                            
+                        <option value="" disabled selected>Choose Cuisine</option>
+                        {% for cat in cuisines %}
+                            <option value="{{cat.cuisine_name}}">{{cat.cuisine_name}}</option>
+                        {% endfor %}
+                    </select>
+                
+                </div>
+            </div>
+        
+            <div class="row">
+                <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">Recipe Name</div>
+                </div>
+                <input id="recipe_name" name="recipe_name" type="text" class="form-control">
+                
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">Preparation time</div>
+                </div>
+                <input type="range" min="1" max="120" value="5" class="form-control slider" id="preptime">
+                <!-- <label id="timebox" class="form-control timebox">5</label> -->
+                <input id="timebox1" name="preparation_time" type="text" class="form-control" value="5">
+                 
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">Cooking time</div>
+                </div>
+                <input type="range" min="1" max="120" value="5" class="form-control slider" id="cooktime">
+                
+                <input id="timebox2" name="cooking_time" type="text" class="form-control" value="5">
+                 
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">Full Name</div>
+                </div>
+                <input id="author_name" name="author" type="text" class="form-control">
+                
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">Alias Name</div>
+                </div>
+                <input id="alias_name" name="alias" type="text" class="form-control">
+                
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">Date</div>
+                </div>
+                <input id="date_stamp" name="date_stamp" type="text" class="form-control" readonly>
+                
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">Ingridents</div>
+                </div>
+                <textarea class="form-control" name="ingridents" id="ingridents" rows="3"></textarea>
+                
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">Preparation Steps</div>
+                </div>
+                <textarea class="form-control" name="preparation_steps" id="preparation_steps" rows="3"></textarea>
+                
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-group mb-2">
+                
+                <button type="submit" class="btn btn-primary">Add Recipe</button>
+        
+                
+                </div>
+            </div>
+            
+            
+            
+        </form>
+     </div> 
+</div>
+<script>
+    var slider1 = document.getElementById("preptime");
+    var slider2 = document.getElementById("cooktime");
+    //textbox for preparation_time
+    var output1 = document.getElementById("timebox1");
+    //textbox for cooking_time
+    var output2 = document.getElementById("timebox2");
+    var timeIn = " MINS";
+    output1.value = slider1.value + timeIn;
+    output2.value = slider2.value + timeIn;
+    //slider for preparation_time
+    slider1.oninput = function() {
+      output1.value = this.value + timeIn;
+    }
+    //slider for cooking_time
+    slider2.oninput = function() {
+      output2.value = this.value + timeIn;
+    }
+
+    
+  var d = new Date();
+  var n = d.toDateString();
+  document.getElementById("date_stamp").value = n;
+
+    </script>
+{% endblock %}
