@@ -54,7 +54,7 @@ def update_recipe(recipe_id):
     recipes.update( {'_id': ObjectId(recipe_id)},
     {
         'required_tools': request.form.get('required_tools'),
-        'cusine_name':request.form.get('cuisine_name'),
+        'cuisine_name':request.form.get('cuisine_name'),
         'recipe_name':request.form.get('recipe_name'),
         'preparation_time':request.form.get('preparation_time'),
         'cooking_time': request.form.get('cooking_time'),

@@ -14,7 +14,7 @@
                             
                         <option value="" disabled>Choose Cooking Tool</option>
                         {% for cat in tool %}
-                            {% if cat.required_tool_name == recipe.required_tool_name %}
+                            {% if cat.required_tool_name == recipe.required_tools %}
                                 <option value="{{cat.required_tool_name}}" selected>{{cat.required_tool_name}}</option>
                             {% else %}
                                 <option value="{{cat.required_tool_name}}">{{cat.required_tool_name}}</option>
