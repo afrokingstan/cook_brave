@@ -14,7 +14,7 @@
   <link href="{{url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link  href="{{url_for('static', filename='css/recipe-home.css')}}" rel="stylesheet">
+  <link href="{{url_for('static', filename='css/recipe-home.css')}}" rel="stylesheet">
 
   <!-- Fontawesome CDN -->
   <script src="https://use.fontawesome.com/7ebbc22a87.js"></script>
@@ -29,7 +29,8 @@
       <a class="navbar-brand brand-shadow" href="{{url_for('get_recipes')}}">
         <img src="/static/images/cookingtools.svg" width="40" height="40" class="d-inline-block align-top" alt="">
         Cook Brave</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -40,7 +41,8 @@
             </a>
           </li>
           <li class="nav-item active dropdown">
-            <a class="nav-link dropdown-toggle nav-shadow" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle nav-shadow" href="#" id="navbarDropdown" role="button"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Cuisines
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -48,7 +50,8 @@
               <a class="dropdown-item" href="#">Asian</a>
           </li>
           <li class="nav-item active dropdown">
-            <a class="nav-link dropdown-toggle nav-shadow" href="{{url_for('get_recipes')}}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle nav-shadow" href="{{url_for('get_recipes')}}" id="navbarDropdown"
+              role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Recipes
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -65,24 +68,35 @@
   </nav>
 
   <!-- Page Content -->
+
+  {% with messages = get_flashed_messages(with_categories=True) %}
+  {% if messages %}
+  <ul>
+      {% for category, message in messages %}
+      <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+  </ul>
+  {% endif %}
+  {% endwith %}
+  
   <div class="container">
 
-    
 
 
 
-            
 
-            
-            {% block content %}
-            {% endblock %}
 
-        
-      
-    
+
+
+    {% block content %}
+    {% endblock %}
+
+
+
+
 
     <!-- /.row -->
- 
+
   </div>
   <!-- /.container -->
 
@@ -94,9 +108,10 @@
     <!-- /.container -->
   </footer>
 
- <!-- Bootstrap core JavaScript -->
- <script src="{{url_for('static', filename='vendor/jquery/jquery.min.js')}}"></script>
- <script src="{{url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script src="{{url_for('static', filename='vendor/jquery/jquery.min.js')}}"></script>
+  <script src="{{url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
 </body>
 
 </html>

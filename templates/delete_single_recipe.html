@@ -10,9 +10,9 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text">Required Tools</div>
                     </div>
-                    <select id="required_tools" name="required_tools" class="form-control">
+                    <select id="required_tools" name="required_tools" class="form-control" disabled>
                             
-                        <option value="" disabled>Choose Cooking Tool</option>
+                        <option readonly value="" disabled>Choose Cooking Tool</option>
                         {% for cat in tool %}
                             {% if cat.required_tool_name == recipe.required_tools %}
                                 <option value="{{cat.required_tool_name}}" selected>{{cat.required_tool_name}}</option>
@@ -29,9 +29,9 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text">Cuisine Name</div>
                     </div>
-                    <select id="cuisine" name="cuisine_name" class="form-control">
+                    <select id="cuisine" name="cuisine_name" class="form-control" disabled>
                             
-                        <option value="" disabled>Choose Cuisine</option>
+                        <option value="" disabled readonly>Choose Cuisine</option>
                         {% for cat in cuisines %}
                         
                             {% if cat.cuisine_name == recipe.cuisine_name %}
@@ -50,7 +50,7 @@
                 <div class="input-group-prepend">
                     <div class="input-group-text">Recipe Name</div>
                 </div>
-                <input id="recipe_name" name="recipe_name" type="text" class="form-control" value={{recipe.recipe_name}}>
+                <input id="recipe_name" name="recipe_name" type="text" class="form-control" readonly value="{{recipe.recipe_name}}">
                 
                 </div>
             </div>
@@ -60,7 +60,7 @@
                     <div class="input-group-text">Preparation time</div>
                 </div>
 
-                <input id="timebox1" name="preparation_time" type="text" class="form-control" value="{{recipe.preparation_time}}">
+                <input id="timebox1" name="preparation_time" type="text" class="form-control" readonly value="{{recipe.preparation_time}}">
                  
                 </div>
 
@@ -71,7 +71,7 @@
                     <div class="input-group-text">Cooking time</div>
                 </div>
                 
-                <input id="timebox2" name="cooking_time" type="text" class="form-control" value="{{recipe.cooking_time}}">
+                <input id="timebox2" name="cooking_time" type="text" class="form-control" readonly value="{{recipe.cooking_time}}">
                  
                 </div>
             </div>
@@ -82,7 +82,7 @@
                 <div class="input-group-prepend">
                     <div class="input-group-text">Alias Name</div>
                 </div>
-                <input id="alias_name" name="alias" type="text" class="form-control" value="{{recipe.alias}}">
+                <input id="alias_name" name="alias" type="text" class="form-control" readonly value="{{recipe.alias}}">
                 
                 </div>
             </div>
@@ -98,9 +98,9 @@
             <div class="row">
                 <div class="input-group mb-2">
                 <div class="input-group-prepend">
-                    <div class="input-group-text">Ingridents</div>
+                    <div class="input-group-text">Ingredients</div>
                 </div>
-                <textarea class="form-control" name="ingridents" id="ingridents" rows="3" >{{recipe.ingridents}}</textarea>
+                <textarea class="form-control" name="ingredients" id="ingredients" rows="3" readonly>{{recipe.ingredients}}</textarea>
                 
                 </div>
             </div>
@@ -109,7 +109,7 @@
                 <div class="input-group-prepend">
                     <div class="input-group-text">Preparation Steps</div>
                 </div>
-                <textarea class="form-control" name="preparation_steps" id="preparation_steps" rows="3" >{{recipe.preparation_steps}}</textarea>
+                <textarea class="form-control" name="preparation_steps" id="preparation_steps" rows="3" readonly>{{recipe.preparation_steps}}</textarea>
                 
                 </div>
             </div>

@@ -18,6 +18,9 @@ mongo = PyMongo(app)
 def get_recipes():
     return render_template("recipes.html", recipes=mongo.db.recipes.find())
 
+
+
+
 @app.route('/add_recipe')
 def add_recipe():
     return render_template('addrecipe.html',
@@ -37,33 +40,32 @@ def editrecipe_home():
     return render_template("editrecipe_home.html", recipes=mongo.db.recipes.find())
 
 
-
-
 @app.route('/edit_recipe/<recipe_id>')
 def edit_recipe(recipe_id):
-    the_recipe =  mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
-    all_categories =  mongo.db.cuisines.find()
-    all_tools =  mongo.db.required_tools.find()
-    return render_template('editrecipe.html', recipe=the_recipe, 
+    the_recipe = mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
+    all_categories = mongo.db.cuisines.find()
+    all_tools = mongo.db.required_tools.find()
+    return render_template('editrecipe.html', recipe=the_recipe,
                            cuisines=all_categories,
                            tool=all_tools)
+
 
 @app.route('/update_recipe/<recipe_id>', methods=["POST"])
 def update_recipe(recipe_id):
     recipes = mongo.db.recipes
-    recipes.update( {'_id': ObjectId(recipe_id)},
-    {
+    recipes.update({'_id': ObjectId(recipe_id)},
+                   {
         'required_tools': request.form.get('required_tools'),
-        'cuisine_name':request.form.get('cuisine_name'),
-        'recipe_name':request.form.get('recipe_name'),
-        'preparation_time':request.form.get('preparation_time'),
+        'cuisine_name': request.form.get('cuisine_name'),
+        'recipe_name': request.form.get('recipe_name'),
+        'preparation_time': request.form.get('preparation_time'),
         'cooking_time': request.form.get('cooking_time'),
         'author': request.form.get('author'),
         'alias': request.form.get('alias'),
         'date_stamp': request.form.get('date_stamp'),
-        'ingridents': request.form.get('ingridents'),
-        'preparation_steps': request.form.get('preparation_steps')       
-        
+        'ingredients': request.form.get('ingredients'),
+        'preparation_steps': request.form.get('preparation_steps')
+
     })
     return redirect(url_for('get_recipes'))
 
@@ -75,31 +77,13 @@ def deleterecipe_home():
 
 @app.route('/delete_single_recipe/<recipe_id>')
 def delete_single_recipe(recipe_id):
-    the_recipe =  mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
-    all_categories =  mongo.db.cuisines.find()
-    all_tools =  mongo.db.required_tools.find()
-    return render_template('delete_single_recipe.html', recipe=the_recipe, 
+    the_recipe = mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
+    all_categories = mongo.db.cuisines.find()
+    all_tools = mongo.db.required_tools.find()
+    return render_template('delete_single_recipe.html', recipe=the_recipe,
                            cuisines=all_categories,
                            tool=all_tools)
 
-@app.route('/delete_recipe/<recipe_id>', methods=["POST"])
-def delete_recipe(recipe_id):
-    recipes = mongo.db.recipes
-    recipes.update( {'_id': ObjectId(recipe_id)},
-    {
-        'required_tools': request.form.get('required_tools'),
-        'cuisine_name':request.form.get('cuisine_name'),
-        'recipe_name':request.form.get('recipe_name'),
-        'preparation_time':request.form.get('preparation_time'),
-        'cooking_time': request.form.get('cooking_time'),
-        #'author': request.form.get('author'),
-        'alias': request.form.get('alias'),
-        'date_stamp': request.form.get('date_stamp'),
-        'ingridents': request.form.get('ingridents'),
-        'preparation_steps': request.form.get('preparation_steps')       
-        
-    })
-    return redirect(url_for('get_recipes'))
 
 @app.route('/remove_recipe/<recipe_id>', methods=["POST"])
 def remove_recipe(recipe_id):
