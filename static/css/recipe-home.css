@@ -1,14 +1,13 @@
 body {
   padding-top: 56px;
-  background-color: lavender;
-  background-image: url("/static/images/b.png");
+  background-image: url("/static/images/bg.jpg");
   background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: 800px 100px; 
+  background-attachment: fixed;  
+  background-size: cover;
 }
 
 .bg-nav {
-  background-color: slategrey;
+  background-color: #f78836;
   box-shadow: 0px 3px 5px -1px #888888;
 }
 
@@ -23,7 +22,14 @@ body {
   
 }
 
+.header-shadow {
+  text-shadow: 2px 2px 2px black;
+}
 
+
+.bg-footer {
+  background-color: #d75008;
+}
 
 .slider {
   -webkit-appearance: none;
