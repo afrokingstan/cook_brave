@@ -9,6 +9,15 @@
   <meta name="author" content="">
 
   <title>Recipe Home</title>
+{% block body %}
+  {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+      {% for category, message in messages %}
+          <p class="bg-{{category}} mt-3 text-center text-white">{{ message }}</p>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+{% endblock %}
 
   <!-- Bootstrap core CSS-->
   <link href="{{url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -68,17 +77,6 @@
   </nav>
 
   <!-- Page Content -->
-
-  {% with messages = get_flashed_messages(with_categories=True) %}
-  {% if messages %}
-  <ul>
-      {% for category, message in messages %}
-      <li class="{{ category }}">{{ message }}</li>
-      {% endfor %}
-  </ul>
-  {% endif %}
-  {% endwith %}
-  
   <div class="container">
 
 

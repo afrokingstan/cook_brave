@@ -1,16 +1,57 @@
 import os
-from flask import Flask, render_template, redirect, request, url_for
+import bson
+import secrets
+from flask import Flask, render_template, redirect, request, url_for, session, flash
+from werkzeug.exceptions import HTTPException
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
 load_dotenv(verbose=True)
 
 
+
+
 app = Flask(__name__)
 app.config["MONGO_DBNAME"] = 'recipe_manager'
 app.config["MONGO_URI"] = os.getenv("MONGO_URI")
 
+secret = secrets.token_urlsafe(32)
+app.secret_key = secret
+
 mongo = PyMongo(app)
+
+
+#start of exception handling code
+
+
+#@app.errorhandler(Exception)
+#def handle_exception(e):
+    # pass through HTTP errors
+  #  if isinstance(e, bson.errors.InvalidId):
+    #    flash("That object does not exist")
+   #     return redirect(...)
+   # elif isinstance(e, KeyError):
+   #     flash("Couldn't handle your request")
+   #     return redirect(url_for('get_recipes'))
+
+    # now you're handling non-HTTP exceptions only
+    #return render_template("500_generic.html", e=e), 500
+
+@app.errorhandler(404)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('404.html'), 404
+
+@app.errorhandler(bson.errors.InvalidId)
+def handle_exception(e):
+    flash("That object does not exist",  "danger")
+    return redirect(url_for('get_recipes'))
+#end of exceptopn handling code
+
+
+
+
+
 
 
 @app.route('/')
@@ -32,6 +73,7 @@ def add_recipe():
 def insert_recipe():
     recipes = mongo.db.recipes
     recipes.insert_one(request.form.to_dict())
+    flash("You successfully added one recipe", "info")
     return redirect(url_for('get_recipes'))
 
 
@@ -67,6 +109,7 @@ def update_recipe(recipe_id):
         'preparation_steps': request.form.get('preparation_steps')
 
     })
+    flash("You successfully updated one recipe", "info")
     return redirect(url_for('get_recipes'))
 
 
@@ -88,6 +131,7 @@ def delete_single_recipe(recipe_id):
 @app.route('/remove_recipe/<recipe_id>', methods=["POST"])
 def remove_recipe(recipe_id):
     mongo.db.recipes.remove({'_id': ObjectId(recipe_id)})
+    flash("You successfully deleted one recipe", "danger")
     return redirect(url_for('get_recipes'))
 
 
