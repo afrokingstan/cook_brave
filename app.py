@@ -1,8 +1,9 @@
 import os
 import bson
 import secrets
-from flask import Flask, render_template, redirect, request, url_for, session, flash
+from flask import Flask, render_template, redirect, request, url_for, session, flash, request, abort
 from werkzeug.exceptions import HTTPException
+from  werkzeug.debug import get_current_traceback
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
@@ -15,37 +16,38 @@ app = Flask(__name__)
 app.config["MONGO_DBNAME"] = 'recipe_manager'
 app.config["MONGO_URI"] = os.getenv("MONGO_URI")
 
+#start of session key generator to ensure falsh message is displayed
 secret = secrets.token_urlsafe(32)
 app.secret_key = secret
-
+#end of session key generator
 mongo = PyMongo(app)
 
 
 #start of exception handling code
 
+@app.errorhandler(bson.errors.InvalidId)
+def handle_exception(e):
+   flash("That object does not exist",  "danger")
+   return redirect(url_for('get_recipes'))
 
-#@app.errorhandler(Exception)
-#def handle_exception(e):
-    # pass through HTTP errors
-  #  if isinstance(e, bson.errors.InvalidId):
-    #    flash("That object does not exist")
-   #     return redirect(...)
-   # elif isinstance(e, KeyError):
-   #     flash("Couldn't handle your request")
-   #     return redirect(url_for('get_recipes'))
 
-    # now you're handling non-HTTP exceptions only
-    #return render_template("500_generic.html", e=e), 500
+
+
+@app.errorhandler(Exception)
+def unhandled_exception(e):
+   return render_template('500_generic.html'), 500
+
+@app.errorhandler(403)
+def forbidden(e):
+    return render_template("500_generic.html"), 403
+
+
 
 @app.errorhandler(404)
 def page_not_found(e):
-    # note that we set the 404 status explicitly
-    return render_template('404.html'), 404
+    return render_template("404.html"), 404
 
-@app.errorhandler(bson.errors.InvalidId)
-def handle_exception(e):
-    flash("That object does not exist",  "danger")
-    return redirect(url_for('get_recipes'))
+    
 #end of exceptopn handling code
 
 
@@ -137,5 +139,4 @@ def remove_recipe(recipe_id):
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
-            #port=int(os.environ.get('PORT')),
             debug=True)
