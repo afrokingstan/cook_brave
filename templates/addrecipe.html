@@ -4,7 +4,7 @@
 <div class="row mt-4">
      <div class="col-lg-8 mx-auto"> 
         <h3 class="text-center text-white header-shadow">ADD RECIPE</h3>
-        <form action="{{ url_for('insert_recipe') }}" method="POST" class="col s12">
+        <form action="{{ url_for('insert_recipe') }}" method="POST" class="col s12" enctype="multipart/form-data">
             <div class="row">
                 <div class="input-group mb-2">
                     <div class="input-group-prepend">
@@ -114,6 +114,17 @@
                 
                 </div>
             </div>
+                
+            <div class="row">
+                <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">Uploaded image</div>
+                </div>
+                <input id="image_name" name="image_name" type="text" value="" class="form-control" readonly>
+                </div>
+            </div>
+        
+
 
             <div class="row">
                 <div class="input-group mb-2">
@@ -130,6 +141,7 @@
      </div> 
 </div>
 <script>
+//block code to get form slider working
     var slider1 = document.getElementById("preptime");
     var slider2 = document.getElementById("cooktime");
     //textbox for preparation_time
@@ -147,11 +159,17 @@
     slider2.oninput = function() {
       output2.value = this.value + timeIn;
     }
+//end of form slider code
 
-    
+//block code to set current date into form element date_stamp  
   var d = new Date();
   var n = d.toDateString();
   document.getElementById("date_stamp").value = n;
 
-    </script>
+//block code to prepopulte file name in form element image_name.
+ var fileUrlName = location.search;
+ var imageName = fileUrlName.slice(10)
+ document.getElementById("image_name").value = imageName;
+ 
+</script>
 {% endblock %}

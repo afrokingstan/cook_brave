@@ -1,9 +1,10 @@
 import os
 import bson
 import secrets
-from flask import Flask, render_template, redirect, request, url_for, session, flash, request, abort
+from flask import Flask, render_template, redirect, request, url_for, session, flash, abort
 from werkzeug.exceptions import HTTPException
 from  werkzeug.debug import get_current_traceback
+from werkzeug.utils import secure_filename
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
@@ -16,11 +17,77 @@ app = Flask(__name__)
 app.config["MONGO_DBNAME"] = 'recipe_manager'
 app.config["MONGO_URI"] = os.getenv("MONGO_URI")
 
+mongo = PyMongo(app)
 #start of session key generator to ensure falsh message is displayed
 secret = secrets.token_urlsafe(32)
 app.secret_key = secret
 #end of session key generator
-mongo = PyMongo(app)
+
+#start of file upload file handling 
+##############################################
+UPLOAD_FOLDER = '/Users/sttec/OneDrive/full stack dev/data project/cook_brave/static/uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route("/upload_image", methods=['GET', 'POST'])
+def upload_image():
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'image' not in request.files:
+            flash('No file part', 'danger')
+            return redirect("upload_image.html")
+        image = request.files['image']
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if image.filename == '':
+            flash('No selected file', 'danger')
+            return redirect("upload_image.html")
+        if image and allowed_file(image.filename):
+            filename = secure_filename(image.filename)
+            image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            flash('Image uploaded', 'info')
+            return redirect(url_for('add_recipe', 
+            filename=filename))
+        else:
+            flash('That file extension is not allowed', 'danger')
+            return redirect("upload_image.html")
+    
+#######################################################################
+#end of file upload file handling
+
+#start of add recipe code
+@app.route('/add_recipe')
+def add_recipe():
+    return render_template('addrecipe.html',
+                           cuisines=mongo.db.cuisines.find(),
+                           required_tools=mongo.db.required_tools.find())
+
+
+@app.route('/insert_recipe', methods=['POST'])
+def insert_recipe():
+    recipes = mongo.db.recipes
+    recipes.insert_one(request.form.to_dict())
+    flash("You successfully added one recipe", "info")
+    return redirect(url_for('get_recipes'))
+
+
+
+#end of add recipe code
+
+
+
+
+
+@app.route('/uploadshome')
+def uploadshome():
+    return render_template("upload_image.html")
+
+
+
 
 
 #start of exception handling code
@@ -54,31 +121,19 @@ def page_not_found(e):
 
 
 
-
+#start of all recipe home page code
 
 @app.route('/')
 @app.route('/get_recipes')
 def get_recipes():
     return render_template("recipes.html", recipes=mongo.db.recipes.find())
 
+#end of all recipe home page code
 
 
 
-@app.route('/add_recipe')
-def add_recipe():
-    return render_template('addrecipe.html',
-                           cuisines=mongo.db.cuisines.find(),
-                           required_tools=mongo.db.required_tools.find())
 
-
-@app.route('/insert_recipe', methods=['POST'])
-def insert_recipe():
-    recipes = mongo.db.recipes
-    recipes.insert_one(request.form.to_dict())
-    flash("You successfully added one recipe", "info")
-    return redirect(url_for('get_recipes'))
-
-
+# start of edit recipe codes 
 @app.route('/editrecipe_home')
 def editrecipe_home():
     return render_template("editrecipe_home.html", recipes=mongo.db.recipes.find())
@@ -108,12 +163,17 @@ def update_recipe(recipe_id):
         'alias': request.form.get('alias'),
         'date_stamp': request.form.get('date_stamp'),
         'ingredients': request.form.get('ingredients'),
+        'image_name': request.form.get('image_name'),
         'preparation_steps': request.form.get('preparation_steps')
+        
 
     })
     flash("You successfully updated one recipe", "info")
     return redirect(url_for('get_recipes'))
 
+# end of edit recipe code
+
+#start of delete recipe code
 
 @app.route('/deleterecipe_home')
 def deleterecipe_home():
@@ -136,6 +196,7 @@ def remove_recipe(recipe_id):
     flash("You successfully deleted one recipe", "danger")
     return redirect(url_for('get_recipes'))
 
+#end of delete recipe code
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
