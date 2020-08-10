@@ -63,3 +63,8 @@ body {
   background: #4CAF50;
   cursor: pointer;
 }
+
+img.card-img-top {
+  max-height: 300px;
+  max-width: 750px;
+}
