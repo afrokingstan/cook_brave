@@ -84,6 +84,7 @@ def insert_recipe():
 
 @app.route('/uploadshome')
 def uploadshome():
+    flash("Please select a recipe image to upload", "info")
     return render_template("upload_image.html")
 
 
@@ -136,6 +137,7 @@ def get_recipes():
 # start of edit recipe codes 
 @app.route('/editrecipe_home')
 def editrecipe_home():
+    flash("Please select the recipe you want to edit", "info")
     return render_template("editrecipe_home.html", recipes=mongo.db.recipes.find())
 
 
@@ -177,6 +179,7 @@ def update_recipe(recipe_id):
 
 @app.route('/deleterecipe_home')
 def deleterecipe_home():
+    flash("Please select the recipe you want to delete", "info")
     return render_template("deleterecipe_home.html", recipes=mongo.db.recipes.find())
 
 

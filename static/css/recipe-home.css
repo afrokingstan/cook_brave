@@ -68,3 +68,13 @@ img.card-img-top {
   max-height: 300px;
   max-width: 750px;
 }
+
+.row.mt-4.up-img {
+  height: 550px;
+}
+
+.invalid-feedback.flash-shadow,
+.valid-feedback.flash-shadow 
+{
+  text-shadow: 2px 2px 2px white;
+}

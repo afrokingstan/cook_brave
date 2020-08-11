@@ -17,7 +17,7 @@
                             <option value="{{tool.required_tool_name}}">{{tool.required_tool_name}}</option>
                         {% endfor %}
                     </select>
-                    <div class="invalid-feedback header-shadow">
+                    <div class="invalid-feedback flash-shadow">
                         Please choose a required tool.
                       </div>
                 </div>
@@ -34,7 +34,7 @@
                             <option value="{{cat.cuisine_name}}">{{cat.cuisine_name}}</option>
                         {% endfor %}
                     </select>
-                    <div class="invalid-feedback header-shadow">
+                    <div class="invalid-feedback flash-shadow">
                         Please Add Cuisine Name.
                       </div>
                 </div>
@@ -46,7 +46,7 @@
                     <div class="input-group-text">Recipe Name</div>
                 </div>
                 <input id="recipe_name" name="recipe_name" type="text" class="form-control" required>
-                <div class="invalid-feedback header-shadow">
+                <div class="invalid-feedback flash-shadow">
                     Please Enter Recipe Name.
                   </div>
                 </div>
@@ -59,7 +59,7 @@
                 <input type="range" min="1" max="120" value="5" class="form-control slider" id="preptime">
                 <!-- <label id="timebox" class="form-control timebox">5</label> -->
                 <input id="timebox1" name="preparation_time" type="text" class="form-control" value="5" required>
-                <div class="valid-feedback header-shadow">
+                <div class="valid-feedback flash-shadow">
                     Looks good!
                   </div>
                 </div>
@@ -73,7 +73,7 @@
                 <input type="range" min="1" max="120" value="5" class="form-control slider" id="cooktime">
                 
                 <input id="timebox2" name="cooking_time" type="text" class="form-control" value="5" required>
-                <div class="valid-feedback header-shadow">
+                <div class="valid-feedback flash-shadow">
                     Looks good!
                   </div>
                 </div>
@@ -84,7 +84,7 @@
                     <div class="input-group-text">Full Name</div>
                 </div>
                 <input id="author_name" name="author" type="text" class="form-control" required>
-                <div class="invalid-feedback header-shadow">
+                <div class="invalid-feedback flash-shadow">
                     Please add full name
                   </div>
                 </div>
@@ -96,7 +96,7 @@
                     <div class="input-group-text">Alias Name</div>
                 </div>
                 <input id="alias_name" name="alias" type="text" class="form-control" required>
-                <div class="invalid-feedback header-shadow">
+                <div class="invalid-feedback flash-shadow">
                     Please add a Nick Name
                   </div>
                 </div>
@@ -115,7 +115,7 @@
                     <div class="input-group-text">Ingredients</div>
                 </div>
                 <textarea class="form-control" name="ingredients" id="ingredients" rows="3" required></textarea>
-                <div class="invalid-feedback header-shadow">
+                <div class="invalid-feedback flash-shadow">
                     Please enter Cooking Ingridents.
                   </div>
                 </div>
@@ -126,7 +126,7 @@
                     <div class="input-group-text">Preparation Steps</div>
                 </div>
                 <textarea class="form-control" name="preparation_steps" id="preparation_steps" rows="3" required></textarea>
-                <div class="invalid-feedback header-shadow">
+                <div class="invalid-feedback flash-shadow">
                     Please enter Preparation Steps.
                   </div>
                 </div>
@@ -138,7 +138,7 @@
                     <div class="input-group-text">Uploaded image</div>
                 </div>
                 <input id="image_name" name="image_name" type="text" value="" class="form-control" readonly required>
-                <div class="valid-feedback header-shadow">
+                <div class="valid-feedback flash-shadow">
                     Looks good!
                   </div>
                 </div>
