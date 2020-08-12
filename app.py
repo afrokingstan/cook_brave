@@ -200,6 +200,51 @@ def remove_recipe(recipe_id):
     return redirect(url_for('get_recipes'))
 
 #end of delete recipe code
+############# start of filter recipe code
+
+@app.route('/Afrofilter')
+def Afrofilter():
+    flash("These are all the African Cuisine recipes", "info")
+    return render_template("filter.html", recipes=mongo.db.recipes.find({"cuisine_name": "African"}))
+
+@app.route('/Carifilter')
+def Carifilter():
+    flash("These are all the Caribbean Cuisine recipes", "info")
+    return render_template("filter.html", recipes=mongo.db.recipes.find({"cuisine_name": "Caribbean"}))
+
+@app.route('/Spanifilter')
+def Spanifilter():
+    flash("These are all the Spanish recipes", "info")
+    return render_template("filter.html", recipes=mongo.db.recipes.find({"cuisine_name": "Spanish"}))
+
+@app.route('/BPfilter')
+def BPfilter():
+    flash("These are all the brand Pressure cooker recipes", "info")
+    return render_template("filter.html", recipes=mongo.db.recipes.find({"required_tools": "brand Pressure cooker"}))
+
+@app.route('/BSfilter')
+def BSfilter():
+    flash("These are all the brand steamer recipes", "info")
+    return render_template("filter.html", recipes=mongo.db.recipes.find({"required_tools": "brand steamer"}))
+
+@app.route('/BGfilter')
+def BGfilter():
+    flash("These are all the brand grill recipes", "info")
+    return render_template("filter.html", recipes=mongo.db.recipes.find({"required_tools": "brand grill"}))
+
+@app.route('/BCfilter')
+def BCfilter():
+    flash("These are all the brand cooker recipes", "info")
+    return render_template("filter.html", recipes=mongo.db.recipes.find({"required_tools": "brand cooker"}))
+
+@app.route('/OUfilter')
+def OUfilter():
+    flash("These are all the others unbranded recipes", "info")
+    return render_template("filter.html", recipes=mongo.db.recipes.find({"required_tools": "others unbranded"}))
+
+
+################end of filter recipe code
+
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
