@@ -27,7 +27,6 @@ def handle_exception(e):
    flash("That object does not exist",  "danger")
    return redirect(url_for('get_recipes'))
 
-
 @app.errorhandler(Exception)
 def unhandled_exception(e):
    return render_template('500_generic.html'), 500
@@ -35,8 +34,6 @@ def unhandled_exception(e):
 @app.errorhandler(403)
 def forbidden(e):
     return render_template("500_generic.html"), 403
-
-
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -47,9 +44,6 @@ def page_not_found(e):
 @app.route('/get_recipes')
 def get_recipes():
     return render_template("allrecipes.html", recipes=mongo.db.recipes.find().sort("_id", -1))
-
-
-
 
 @app.route('/')
 @app.route('/sort_recipes')
@@ -67,11 +61,9 @@ def sort_recipes():
 def oldpagn():
     flash("old page", "info")
     offset = 1
-    
     starting_id = mongo.db.recipes.find().sort("_id", -1)
     last_id = starting_id[offset]['_id']
     return render_template("recipes.html", recipes=mongo.db.recipes.find({'_id' : {'$lt' : last_id}}).sort("_id", -1))
-
 
 @app.route('/pagn')
 def pagn():
@@ -81,7 +73,6 @@ def pagn():
     starting_id = mongo.db.recipes.find().sort("_id", -1)
     last_id = starting_id[offset]['_id']
     return render_template("recipes.html", recipes=mongo.db.recipes.find({'_id' : {'$gte' : last_id}}).sort("_id", -1).limit(limit))
-
 #end of pagination
 
 #start of add recipe code
@@ -91,14 +82,12 @@ def add_recipe():
                            cuisines=mongo.db.cuisines.find(),
                            required_tools=mongo.db.required_tools.find())
 
-
 @app.route('/insert_recipe', methods=['POST'])
 def insert_recipe():
     recipes = mongo.db.recipes
     recipes.insert_one(request.form.to_dict())
     flash("You successfully added one recipe", "info")
     return redirect(url_for('get_recipes'))
-
 #end of add recipe code
 
 #start of file upload file handling 
@@ -137,7 +126,6 @@ def upload_image():
         else:
             flash('That file extension is not allowed', 'danger')
             return redirect("upload_image.html")
-    
 #end of file upload file handling
 
 # start of edit recipe codes 
@@ -145,7 +133,6 @@ def upload_image():
 def editrecipe_home():
     flash("Please select the recipe you want to edit", "info")
     return render_template("editrecipe_home.html", recipes=mongo.db.recipes.find())
-
 
 @app.route('/edit_recipe/<recipe_id>')
 def edit_recipe(recipe_id):
@@ -155,7 +142,6 @@ def edit_recipe(recipe_id):
     return render_template('editrecipe.html', recipe=the_recipe,
                            cuisines=all_categories,
                            tool=all_tools)
-
 
 @app.route('/update_recipe/<recipe_id>', methods=["POST"])
 def update_recipe(recipe_id):
@@ -172,23 +158,17 @@ def update_recipe(recipe_id):
         'date_stamp': request.form.get('date_stamp'),
         'ingredients': request.form.get('ingredients'),
         'image_name': request.form.get('image_name'),
-        'preparation_steps': request.form.get('preparation_steps'),
-        
-        
-
+        'preparation_steps': request.form.get('preparation_steps')
     })
     flash("You successfully updated one recipe", "info")
     return redirect(url_for('get_recipes'))
-
 # end of edit recipe code
 
 #start of delete recipe code
-
 @app.route('/deleterecipe_home')
 def deleterecipe_home():
     flash("Please select the recipe you want to delete", "info")
     return render_template("deleterecipe_home.html", recipes=mongo.db.recipes.find())
-
 
 @app.route('/delete_single_recipe/<recipe_id>')
 def delete_single_recipe(recipe_id):
@@ -199,21 +179,18 @@ def delete_single_recipe(recipe_id):
                            cuisines=all_categories,
                            tool=all_tools)
 
-
 @app.route('/remove_recipe/<recipe_id>', methods=["POST"])
 def remove_recipe(recipe_id):
     mongo.db.recipes.remove({'_id': ObjectId(recipe_id)})
     flash("You successfully deleted one recipe", "danger")
     return redirect(url_for('get_recipes'))
-
 #end of delete recipe code
 
 # start of filter recipe code
 @app.route('/Afrofilter')
 def Afrofilter():
-    cur = mongo.db.recipes.find({"required_tools": "African"})
+    cur = mongo.db.recipes.find({"cuisine_name": "African"})
     results = list(cur) 
-  
 # Checking the cursor is empty 
 # or not 
     if len(results)==0:
@@ -225,9 +202,8 @@ def Afrofilter():
 
 @app.route('/Carifilter')
 def Carifilter():
-    cur = mongo.db.recipes.find({"required_tools": "Caribbean"})
+    cur = mongo.db.recipes.find({"cuisine_name": "Caribbean"})
     results = list(cur) 
-  
 # Checking the cursor is empty 
 # or not 
     if len(results)==0:
@@ -239,9 +215,8 @@ def Carifilter():
 
 @app.route('/Spanifilter')
 def Spanifilter():
-    cur = mongo.db.recipes.find({"required_tools": "Spanish"})
+    cur = mongo.db.recipes.find({"cuisine_name": "Spanish"})
     results = list(cur) 
-  
 # Checking the cursor is empty 
 # or not 
     if len(results)==0:
@@ -255,7 +230,6 @@ def Spanifilter():
 def BPfilter():
     cur = mongo.db.recipes.find({"required_tools": "brand Pressure cooker"})
     results = list(cur) 
-  
 # Checking the cursor is empty 
 # or not 
     if len(results)==0:
@@ -269,7 +243,6 @@ def BPfilter():
 def BSfilter():
     cur = mongo.db.recipes.find({"required_tools": "brand steamer"})
     results = list(cur) 
-  
 # Checking the cursor is empty 
 # or not 
     if len(results)==0:
@@ -283,7 +256,6 @@ def BSfilter():
 def BGfilter():
     cur = mongo.db.recipes.find({"required_tools": "brand grill"})
     results = list(cur) 
-  
 # Checking the cursor is empty 
 # or not 
     if len(results)==0:
@@ -297,7 +269,6 @@ def BGfilter():
 def BCfilter():
     cur = mongo.db.recipes.find({"required_tools": "brand cooker"})
     results = list(cur) 
-  
 # Checking the cursor is empty 
 # or not 
     if len(results)==0:
@@ -311,7 +282,6 @@ def BCfilter():
 def OUfilter():
     cur = mongo.db.recipes.find({"required_tools": "others unbranded"})
     results = list(cur) 
-  
 # Checking the cursor is empty 
 # or not 
     if len(results)==0:
@@ -320,9 +290,7 @@ def OUfilter():
     else:
         flash("These are all the others unbranded recipes", "info")
         return render_template("filter.html", recipes=mongo.db.recipes.find({"required_tools": "others unbranded"}))
-
 #end of filter recipe code
-
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
