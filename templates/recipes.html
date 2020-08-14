@@ -1,47 +1,55 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="row mb-5">
-        <!-- Recipe Entries Column -->
+  <!-- Recipe Entries Column -->
   <div class="col-md-8 text-capitalize">
     <h2 class="my-4 text-white text-left header-shadow">Cook Brave
-      <p class="text-center header-shadow"><small><em>Share Recipes and Cook Like a Pro with our Recommended Cooking Tools</em></small></p>
+      <p class="text-center header-shadow"><small><em>Share Recipes and Cook Like a Pro with our Recommended Cooking
+            Tools</em></small></p>
     </h2>
     {% for recipe in recipes %}
-    
+
 
     <!-- Recipe Post -->
-    <div  class="card mb-4">
-            <img class="card-img-top" src="static/uploads/{{recipe.image_name}}" alt="Card image cap">
-        <div class="card-body">
-            <h2 class="card-title text-capitalize">Recipe: {{recipe.recipe_name}}</h2>
-            <p><h3 class="card-title text-capitalize">Cuisine: {{recipe.cuisine_name}}</h3></p>
-            <p class="card-text text-lowercase"><em>Preparation Time: {{recipe.preparation_time}}   |  Cooking Time: {{recipe.cooking_time}}</em></p>
-            <p class="card-text text-capitalize"><strong>Recommended Cooking Tool: {{recipe.required_tools}}</strong></p>
-            
-            <a class="btn btn-primary" name="colbtn" data-toggle="collapse" href="#{{recipe.recipe_name.replace(' ', '_')}}"  role="button" aria-expanded="false" aria-controls="{{recipe.recipe_name.replace(' ', '_')}}">
-              Read More &rarr;
-            </a>
-            <!-- .replace(' ', '_') code replaces white space with _ in every recipe_name to handle html id not working due to whitespaces-->
-              <div class="collapse mt-2" id="{{recipe.recipe_name.replace(' ', '_')}}" name="coldiv">
-                <div class="card card-body">
-                  <h3 class="card-title text-capitalize">Ingredients</h3><p class="card-text text-lowercase"><em>{{recipe.ingredients}}</em></p>
-                  
-                  <h3 class="card-title text-capitalize">Instructions</h3><p class="card-text text-lowercase"><em>{{recipe.preparation_steps}}</em></p>
-                </div>
-              </div>
-            
-        </div>
-        <div class="card-footer text-muted text-capitalize">
-            Posted on {{recipe.date_stamp}} by
-            <a href="#">{{recipe.alias}}</a>
+    <div class="card mb-4">
+      <img class="card-img-top" src="static/uploads/{{recipe.image_name}}" alt="Card image cap">
+      <div class="card-body">
+        <h2 class="card-title text-capitalize">Recipe: {{recipe.recipe_name}}</h2>
+        <p>
+        <h3 class="card-title text-capitalize">Cuisine: {{recipe.cuisine_name}}</h3>
+        </p>
+        <p class="card-text text-lowercase"><em>Preparation Time: {{recipe.preparation_time}} | Cooking Time:
+            {{recipe.cooking_time}}</em></p>
+        <p class="card-text text-capitalize"><strong>Recommended Cooking Tool: {{recipe.required_tools}}</strong></p>
+
+        <a class="btn btn-primary" name="colbtn" data-toggle="collapse" href="#{{recipe.recipe_name.replace(' ', '_')}}"
+          role="button" aria-expanded="false" aria-controls="{{recipe.recipe_name.replace(' ', '_')}}">
+          Read More &rarr;
+        </a>
+        <!-- .replace(' ', '_') code replaces white space with _ in every recipe_name to handle html id not working due to whitespaces-->
+        <div class="collapse mt-2" id="{{recipe.recipe_name.replace(' ', '_')}}" name="coldiv">
+          <div class="card card-body">
+            <h3 class="card-title text-capitalize">Ingredients</h3>
+            <p class="card-text text-lowercase"><em>{{recipe.ingredients}}</em></p>
+
+            <h3 class="card-title text-capitalize">Instructions</h3>
+            <p class="card-text text-lowercase"><em>{{recipe.preparation_steps}}</em></p>
           </div>
-        </div> 
+        </div>
 
-            {% endfor %}
-            
-
- 
-
-
+      </div>
+      <div class="card-footer text-muted text-capitalize">
+        Posted on {{recipe.date_stamp}} by
+        <a href="#">{{recipe.alias}}</a>
+       
+      </div>
+    </div>
   
-{% endblock %}
+    {% endfor %}
+
+
+
+
+
+
+    {% endblock %}
