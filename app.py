@@ -175,6 +175,7 @@ def delete_single_recipe(recipe_id):
     the_recipe = mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
     all_categories = mongo.db.cuisines.find()
     all_tools = mongo.db.required_tools.find()
+    os.remove('./static/uploads/' + mongo.db.recipes.find_one('image_name'))
     return render_template('delete_single_recipe.html', recipe=the_recipe,
                            cuisines=all_categories,
                            tool=all_tools)
