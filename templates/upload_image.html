@@ -1,34 +1,22 @@
 {% extends 'template.html' %}
 {% block content %}
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-compat/3.0.0-alpha1/jquery.min.js" integrity="sha512-4GsgvzFFry8SXj8c/VcCjjEZ+du9RZp/627AEQRVLatx6d60AUnUYXg0lGn538p44cgRs5E2GXq+8IOetJ+6ow==" crossorigin="anonymous"></script>
 <div class="row mt-4 up-img">
     <div class="col-lg-8 mx-auto pt-5">
-       
         <h3 class="text-center text-white header-shadow">UPLOAD IMAGE</h3>
         <form action="{{ url_for('upload_image') }}" method="POST" enctype="multipart/form-data">
-
-
             <div class="custom-file mb-3">
                 <input type="file" class="custom-file-input" id="image" name="image">
                 <label class="custom-file-label" for="customFile">Choose file</label>
-              </div>
-            
+            </div>
                 <div class="input-group mb-2">
                     <button type="submit" class="btn btn-primary">upload image</button>
                 </div>
-            
-
-
         </form>
-
-
-
-
     </div>
 </div>
 <script>
-    // Add the following code if you want the name of the file appear on select
+    //the following code ensures file name appears when attached
     $(".custom-file-input").on("change", function () {
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);

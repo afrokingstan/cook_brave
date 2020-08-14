@@ -1,215 +1,199 @@
 {% extends 'template.html' %} 
 {% block content %}
-
-<div class="row mt-4">
-     <div class="col-lg-8 mx-auto"> 
-        <h3 class="text-center text-white header-shadow">ADD RECIPE</h3>
-        <form action="{{ url_for('insert_recipe') }}" method="POST" class="col s12 needs-validation" novalidate>
-            <div class="row">
-                <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">Required Tools</div>
+    <div class="row mt-4">
+        <div class="col-lg-8 mx-auto"> 
+            <h3 class="text-center text-white header-shadow">ADD RECIPE</h3>
+            <form action="{{ url_for('insert_recipe') }}" method="POST" class="col s12 needs-validation" novalidate>
+                <div class="row">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Required Tools</div>
+                        </div>
+                        <select id="required_tools" name="required_tools" class="form-control" required>    
+                            <option value="" disabled selected>Choose Cooking Tool</option>
+                            {% for tool in required_tools %}
+                                <option value="{{tool.required_tool_name}}">{{tool.required_tool_name}}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="invalid-feedback flash-shadow">
+                            Please choose a required tool.
+                        </div>
                     </div>
-                    <select id="required_tools" name="required_tools" class="form-control" required>
-                            
-                        <option value="" disabled selected>Choose Cooking Tool</option>
-                        {% for tool in required_tools %}
-                            <option value="{{tool.required_tool_name}}">{{tool.required_tool_name}}</option>
-                        {% endfor %}
-                    </select>
-                    <div class="invalid-feedback flash-shadow">
-                        Please choose a required tool.
-                      </div>
-                </div>
-            </div>              
-            <div class="row">
-                <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">Cuisine Name</div>
+                </div>              
+                <div class="row">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Cuisine Name</div>
+                        </div>
+                        <select id="cuisine" name="cuisine_name" class="form-control" required>
+                            <option value="" disabled selected>Choose Cuisine</option>
+                            {% for cat in cuisines %}
+                                <option value="{{cat.cuisine_name}}">{{cat.cuisine_name}}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="invalid-feedback flash-shadow">
+                            Please Add Cuisine Name.
+                        </div>
                     </div>
-                    <select id="cuisine" name="cuisine_name" class="form-control" required>
-                            
-                        <option value="" disabled selected>Choose Cuisine</option>
-                        {% for cat in cuisines %}
-                            <option value="{{cat.cuisine_name}}">{{cat.cuisine_name}}</option>
-                        {% endfor %}
-                    </select>
-                    <div class="invalid-feedback flash-shadow">
-                        Please Add Cuisine Name.
-                      </div>
                 </div>
-            </div>
-        
-            <div class="row">
-                <div class="input-group mb-2">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">Recipe Name</div>
+                <div class="row">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Recipe Name</div>
+                        </div>
+                        <input id="recipe_name" name="recipe_name" type="text" class="form-control" required>
+                        <div class="invalid-feedback flash-shadow">
+                            Please Enter Recipe Name.
+                        </div>
+                    </div>
                 </div>
-                <input id="recipe_name" name="recipe_name" type="text" class="form-control" required>
-                <div class="invalid-feedback flash-shadow">
-                    Please Enter Recipe Name.
-                  </div>
+                <div class="row">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Preparation time</div>
+                        </div>
+                        <input type="range" min="1" max="120" value="5" class="form-control slider" id="preptime">
+                        <!-- <label id="timebox" class="form-control timebox">5</label> -->
+                        <input id="timebox1" name="preparation_time" type="text" class="form-control" value="5" required>
+                        <div class="valid-feedback flash-shadow">
+                            Looks good!
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="input-group mb-2">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">Preparation time</div>
+                <div class="row">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Cooking time</div>
+                        </div>
+                        <input type="range" min="1" max="120" value="5" class="form-control slider" id="cooktime">
+                        
+                        <input id="timebox2" name="cooking_time" type="text" class="form-control" value="5" required>
+                        <div class="valid-feedback flash-shadow">
+                            Looks good!
+                        </div>
+                    </div>
                 </div>
-                <input type="range" min="1" max="120" value="5" class="form-control slider" id="preptime">
-                <!-- <label id="timebox" class="form-control timebox">5</label> -->
-                <input id="timebox1" name="preparation_time" type="text" class="form-control" value="5" required>
-                <div class="valid-feedback flash-shadow">
-                    Looks good!
-                  </div>
+                <div class="row">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Full Name</div>
+                        </div>
+                        <input id="author_name" name="author" type="text" class="form-control" required>
+                        <div class="invalid-feedback flash-shadow">
+                            Please add full name
+                        </div>
+                    </div>
                 </div>
-
-            </div>
-            <div class="row">
-                <div class="input-group mb-2">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">Cooking time</div>
+                <div class="row">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Alias Name</div>
+                        </div>
+                        <input id="alias_name" name="alias" type="text" class="form-control" required>
+                        <div class="invalid-feedback flash-shadow">
+                            Please add a Nick Name
+                        </div>
+                    </div>
                 </div>
-                <input type="range" min="1" max="120" value="5" class="form-control slider" id="cooktime">
-                
-                <input id="timebox2" name="cooking_time" type="text" class="form-control" value="5" required>
-                <div class="valid-feedback flash-shadow">
-                    Looks good!
-                  </div>
+                <div class="row">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Date</div>
+                        </div>
+                        <input id="date_stamp" name="date_stamp" type="text" class="form-control" readonly>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="input-group mb-2">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">Full Name</div>
+                <div class="row">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Ingredients</div>
+                        </div>
+                        <textarea class="form-control" name="ingredients" id="ingredients" rows="3" required></textarea>
+                        <div class="invalid-feedback flash-shadow">
+                            Please enter Cooking Ingridents.
+                        </div>
+                    </div>
                 </div>
-                <input id="author_name" name="author" type="text" class="form-control" required>
-                <div class="invalid-feedback flash-shadow">
-                    Please add full name
-                  </div>
+                <div class="row">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Preparation Steps</div>
+                        </div>
+                        <textarea class="form-control" name="preparation_steps" id="preparation_steps" rows="3" required></textarea>
+                        <div class="invalid-feedback flash-shadow">
+                            Please enter Preparation Steps.
+                        </div>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="row">
-                <div class="input-group mb-2">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">Alias Name</div>
+                <div class="row">
+                    <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Uploaded image</div>
+                    </div>
+                    <input id="image_name" name="image_name" type="text" value="" class="form-control" readonly required>
+                    <div class="valid-feedback flash-shadow">
+                        Looks good!
+                    </div>
+                    </div>
                 </div>
-                <input id="alias_name" name="alias" type="text" class="form-control" required>
-                <div class="invalid-feedback flash-shadow">
-                    Please add a Nick Name
-                  </div>
+                <div class="row">
+                    <div class="input-group mb-2">
+                        <button type="submit" class="btn btn-primary">Add Recipe</button>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="input-group mb-2">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">Date</div>
-                </div>
-                <input id="date_stamp" name="date_stamp" type="text" class="form-control" readonly>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-group mb-2">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">Ingredients</div>
-                </div>
-                <textarea class="form-control" name="ingredients" id="ingredients" rows="3" required></textarea>
-                <div class="invalid-feedback flash-shadow">
-                    Please enter Cooking Ingridents.
-                  </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-group mb-2">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">Preparation Steps</div>
-                </div>
-                <textarea class="form-control" name="preparation_steps" id="preparation_steps" rows="3" required></textarea>
-                <div class="invalid-feedback flash-shadow">
-                    Please enter Preparation Steps.
-                  </div>
-                </div>
-            </div>
-                
-            <div class="row">
-                <div class="input-group mb-2">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">Uploaded image</div>
-                </div>
-                <input id="image_name" name="image_name" type="text" value="" class="form-control" readonly required>
-                <div class="valid-feedback flash-shadow">
-                    Looks good!
-                  </div>
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="input-group mb-2">
-                
-                <button type="submit" class="btn btn-primary">Add Recipe</button>
-        
-                
-                </div>
-            </div>
-            
-            
-            
-        </form>
-     </div> 
-</div>
-<script>
-//block code to get form slider working
-    var slider1 = document.getElementById("preptime");
-    var slider2 = document.getElementById("cooktime");
-    //textbox for preparation_time
-    var output1 = document.getElementById("timebox1");
-    //textbox for cooking_time
-    var output2 = document.getElementById("timebox2");
-    var timeIn = " MINS";
-    output1.value = slider1.value + timeIn;
-    output2.value = slider2.value + timeIn;
-    //slider for preparation_time
-    slider1.oninput = function() {
-      output1.value = this.value + timeIn;
-    }
-    //slider for cooking_time
-    slider2.oninput = function() {
-      output2.value = this.value + timeIn;
-    }
-//end of form slider code
-
-//block code to set current date into form element date_stamp  
-  var d = new Date();
-  var n = d.toDateString();
-  document.getElementById("date_stamp").value = n;
-
-//block code to prepopulate file name in form element image_name.
- var fileUrlName = location.search;
- var imageName = fileUrlName.slice(10)
- document.getElementById("image_name").value = imageName;
- ////////////////////////////
-
-//custome form validation
-// JavaScript for disabling form submissions if there are invalid fields
-(function() {
-  'use strict';
-  window.addEventListener('load', function() {
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.getElementsByClassName('needs-validation');
-    // Loop over them and prevent submission
-    var validation = Array.prototype.filter.call(forms, function(form) {
-      form.addEventListener('submit', function(event) {
-        if (form.checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
+            </form>
+        </div> 
+    </div>
+    <script>
+    //block code to get form slider working
+        var slider1 = document.getElementById("preptime");
+        var slider2 = document.getElementById("cooktime");
+        //textbox for preparation_time
+        var output1 = document.getElementById("timebox1");
+        //textbox for cooking_time
+        var output2 = document.getElementById("timebox2");
+        var timeIn = " MINS";
+        output1.value = slider1.value + timeIn;
+        output2.value = slider2.value + timeIn;
+        //slider for preparation_time
+        slider1.oninput = function() {
+        output1.value = this.value + timeIn;
         }
-        form.classList.add('was-validated');
-      }, false);
-    });
-  }, false);
-})();
+        //slider for cooking_time
+        slider2.oninput = function() {
+        output2.value = this.value + timeIn;
+        }
+    //end of form slider code
 
-</script>
+    //block code to set current date into form element date_stamp  
+    var d = new Date();
+    var n = d.toDateString();
+    document.getElementById("date_stamp").value = n;
+
+    //block code to prepopulate file name in form element image_name.
+    var fileUrlName = location.search;
+    var imageName = fileUrlName.slice(10)
+    document.getElementById("image_name").value = imageName;
+    //end of code to prepopulate file name in form element image_name.
+
+    //custome form validation
+    // JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        }, false);
+        });
+    }, false);
+    })();
+    </script>
 {% endblock %}

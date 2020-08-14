@@ -1,31 +1,27 @@
-{% extends 'pagination.html' %}
-  {% block content %}
-  <div class="row mb-5">
-          <!-- Recipe Entries Column -->
-    <div class="col-md-8 text-capitalize">
-      <h2 class="my-4 text-white text-left header-shadow">Cook Brave
-        <p class="text-center header-shadow"><small><em>Share Recipes and Cook Like a Pro with our Recommended Cooking Tools</em></small></p>
-      </h2>
-      {% for recipe in recipes %}
-      
-
-      <!-- Recipe Post -->
-      <div class="card mb-4">
-              <img class="card-img-top" src="static/uploads/{{recipe.image_name}}"  alt="Card image cap">
-          <div class="card-body">
-              <h2 class="card-title text-capitalize">Recipe: {{recipe.recipe_name}}</h2>
-              <p><h3 class="card-title text-capitalize">Cuisine: {{recipe.cuisine_name}}</h3></p>
-              <p class="card-text text-lowercase"><em>Preparation Time: {{recipe.preparation_time}}   |  Cooking Time: {{recipe.cooking_time}}</em></p>
-              <p class="card-text text-capitalize"><strong>Recommended Cooking Tool: {{recipe.required_tools}}</strong></p>
-              <a href="{{url_for('delete_single_recipe' , recipe_id=recipe._id)}}" class="btn btn-primary">DELETE &rarr;</a>
-          </div>
-          <div class="card-footer text-muted text-capitalize">
-              Posted on {{recipe.date_stamp}} by
-              <a href="#">{{recipe.alias}}</a>
-            </div>
-          </div> 
-
-              {% endfor %}
-              
-
-  {% endblock %}
+{% extends 'base.html' %}
+{% block content %}
+  <h2 class="my-4 text-white text-left header-shadow">Cook Brave
+    <p class="text-center header-shadow">
+      <small>
+        <em>Share Recipes and Cook Like a Pro with our Recommended Cooking Tools</em>
+      </small>
+    </p>
+  </h2>
+  {% for recipe in recipes %}
+    <!-- Recipe Post -->
+    <div class="card mb-4">
+      <img class="card-img-top" src="static/uploads/{{recipe.image_name}}"  alt="Card image cap">
+      <div class="card-body">
+        <h2 class="card-title text-capitalize">Recipe: {{recipe.recipe_name}}</h2>
+        <p><h3 class="card-title text-capitalize">Cuisine: {{recipe.cuisine_name}}</h3></p>
+        <p class="card-text text-lowercase"><em>Preparation Time: {{recipe.preparation_time}}   |  Cooking Time: {{recipe.cooking_time}}</em></p>
+        <p class="card-text text-capitalize"><strong>Recommended Cooking Tool: {{recipe.required_tools}}</strong></p>
+        <a href="{{url_for('delete_single_recipe' , recipe_id=recipe._id)}}" class="btn btn-primary">DELETE &rarr;</a>
+      </div>
+      <div class="card-footer text-muted text-capitalize">
+        Posted on {{recipe.date_stamp}} by
+        <a href="#">{{recipe.alias}}</a>
+      </div>
+    </div> 
+  {% endfor %}
+{% endblock %}

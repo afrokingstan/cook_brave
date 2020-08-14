@@ -57,17 +57,17 @@ def sort_recipes():
 #end of all recipes homepage
 
 #start ofpagination code
-@app.route('/oldpagn')
-def oldpagn():
-    flash("old page", "info")
+@app.route('/page2')
+def page2():
+    flash("You are on Page Two", "info")
     offset = 1
     starting_id = mongo.db.recipes.find().sort("_id", -1)
     last_id = starting_id[offset]['_id']
     return render_template("recipes.html", recipes=mongo.db.recipes.find({'_id' : {'$lt' : last_id}}).sort("_id", -1))
 
-@app.route('/pagn')
-def pagn():
-    flash("new page", "info")
+@app.route('/page1')
+def page1():
+    flash("You are on Page One", "info")
     offset = 2
     limit = 3
     starting_id = mongo.db.recipes.find().sort("_id", -1)
