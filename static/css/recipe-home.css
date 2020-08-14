@@ -1,3 +1,4 @@
+/* body background image style*/
 body {
   padding-top: 56px;
   background-image: url("/static/images/bg.jpg");
@@ -6,11 +7,13 @@ body {
   background-size: cover;
 }
 
+/* nav div background style*/
 .bg-nav {
   background-color: #f78836;
   box-shadow: 0px 3px 5px -1px #888888;
 }
 
+/* header div and nav div style*/
 .brand-shadow {
   text-shadow: 2px 2px 20px black;
   font-weight: bolder;
@@ -26,17 +29,14 @@ body {
   text-shadow: 2px 2px 2px black;
 }
 
-
+/* footer background color style*/
 .bg-footer {
   background-color: #d75008;
 }
 
+/* form slider style*/
 .slider {
   -webkit-appearance: none;
- /*width: 60%;
-  height: 36px;
-  margin-left: 5px;
-  margin-right: 5px;*/
   background: #d3d3d3;
   outline: none;
   opacity: 0.7;
@@ -64,15 +64,18 @@ body {
   cursor: pointer;
 }
 
+/* image card style*/
 img.card-img-top {
   max-height: 300px;
   max-width: 750px;
 }
 
+/* uploads_home div style*/
 .row.mt-4.up-img {
   height: 550px;
 }
 
+/* form validation div style*/
 .invalid-feedback.flash-shadow,
 .valid-feedback.flash-shadow 
 {
