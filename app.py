@@ -96,7 +96,7 @@ def uploadshome():
     flash("Please select a recipe image to upload", "info")
     return render_template("upload_image.html")
 
-UPLOAD_FOLDER = 'cook_brave/static/uploads'
+UPLOAD_FOLDER = 'https://cookbrave.herokuapp.com/cook_brave/static/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
