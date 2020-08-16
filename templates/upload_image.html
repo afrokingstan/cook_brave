@@ -4,12 +4,10 @@
 <div class="row mt-4 up-img">
     <div class="col-lg-8 mx-auto pt-5">
         <h3 class="text-center text-white header-shadow">UPLOAD IMAGE</h3>
-        <form action="{{ url_for('upload_image') }}" method="POST" enctype="multipart/form-data" class="needs-validation">
+        <form action="{{ url_for('upload_image') }}" method="POST" enctype="multipart/form-data">
             <div class="custom-file mb-3">
                 <input type="file" class="custom-file-input" id="image" name="image" required>
-                <div class="invalid-feedback flash-shadow">
-                    Please select a file.
-                </div>
+               
                 <label class="custom-file-label" for="customFile">Choose file</label>
             </div>
                 <div class="input-group mb-2">
@@ -25,24 +23,5 @@
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
 
-//custome form validation
-    // JavaScript for disabling form submissions if there are invalid fields
-    (function() {
-    'use strict';
-    window.addEventListener('load', function() {
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.getElementsByClassName('needs-validation');
-        // Loop over them and prevent submission
-        var validation = Array.prototype.filter.call(forms, function(form) {
-        form.addEventListener('submit', function(event) {
-            if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-            }
-            form.classList.add('was-validated');
-        }, false);
-        });
-    }, false);
-    })();
 </script>
 {% endblock %}
