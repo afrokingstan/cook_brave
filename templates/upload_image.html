@@ -4,11 +4,11 @@
 <div class="row mt-4 up-img">
     <div class="col-lg-8 mx-auto pt-5">
         <h3 class="text-center text-white header-shadow">UPLOAD IMAGE</h3>
-        <form action="{{ url_for('upload_image') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ url_for('upload_image') }}" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
             <div class="custom-file mb-3">
                 <input type="file" class="custom-file-input" id="image" name="image" required>
                 <div class="invalid-feedback flash-shadow">
-                    Please Enter Recipe Name.
+                    Please select a file.
                 </div>
                 <label class="custom-file-label" for="customFile">Choose file</label>
             </div>
